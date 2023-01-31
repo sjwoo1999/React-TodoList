@@ -3,10 +3,12 @@ import { Flex, Checkbox, IconButton } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 
 function TodoItem(props) {
+  const handleIsDone = (e) => {
+    props.updateTodo(props.id, e.target.checked);
+  };
+
   const deleteTodo = () => {
-    props.setTodoItemList(
-      props.todoItemList.filter((item) => item.id !== props.id)
-    );
+    props.deleteTodo(props.id);
   };
 
   return (
@@ -16,7 +18,11 @@ function TodoItem(props) {
       _hover={{ bgColor: "blue.50" }}
       justifyContent="space-between"
     >
-      <Checkbox size="lg" defaultChecked={props.isDefaultChecked}>
+      <Checkbox
+        size="lg"
+        defaultChecked={props.isDefaultChecked}
+        onChange={handleIsDone}
+      >
         {props.text}
       </Checkbox>
       <IconButton icon={<DeleteIcon />} size="sm" ml={2} onClick={deleteTodo} />
